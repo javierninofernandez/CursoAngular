@@ -1,0 +1,96 @@
+PRACTICA: 
+
+El objetivo sera crear una pagina (en el modulo de clientes) que me muestre una lista de empresas con los siguientes datos por cada una de las empresas
+
+	- codigo, nombre, nif 
+	- Su direccion con calle, numero, cp, poblacion y provincia
+
+
+  
+La información de mis empresas la voy a mostrar en una tabla
+
+la plantilla base par la tabla en html es
+
+<section class="px-3 mx-2">
+    <table class="tabla-empresas">
+    <thead>
+        <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>NIF</th>
+        <th>Calle</th>
+        <th>Número</th>
+        <th>Provincia</th>
+        </tr>
+    </thead>
+
+    <tbody>	
+		<tr>
+            <td> codigo empresa 1 </td>
+            <td> nombre empresa 1 </td>
+            <td> nif empresa 1</td>
+            <td> direccion_calle empresa 1 </td>
+            <td> direccion_numero empresa 1 </td>
+            <td> direccion_provincia empresa 1</td>
+        </tr>
+		<tr>
+            <td> codigo empresa 2 </td>
+            <td> nombre empresa 2 </td>
+            <td> nif empresa 1</td>
+            <td> direccion_calle empresa 2 </td>
+            <td> direccion_numero empresa 2 </td>
+            <td> direccion_provincia empresa 2</td>
+        </tr>
+		<tr>
+            <td> codigo empresa 3 </td>
+            <td> nombre empresa 3 </td>
+            <td> nif empresa 3</td>
+            <td> direccion_calle empresa 3 </td>
+            <td> direccion_numero empresa 3 </td>
+            <td> direccion_provincia empresa 3</td>
+        </tr>
+		<tr>
+            <td> codigo empresa 4 </td>
+            <td> nombre empresa 4 </td>
+            <td> nif empresa 1</td>
+            <td> direccion_calle empresa 4 </td>
+            <td> direccion_numero empresa 4 </td>
+            <td> direccion_provincia empresa 4</td>
+        </tr>
+		
+    </tbody>
+    </table>   
+</section>
+
+
+Para que quede un poco mejor vamos a usar el siguiente css
+
+
+.tabla-empresas {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 0px 20px;
+}
+
+/* Espaciado entre columnas */
+.tabla-empresas th,
+.tabla-empresas td {
+  padding: 12px 20px;
+  text-align: left;
+}
+
+/* Línea separadora horizontal */
+.tabla-empresas tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Línea debajo de las cabeceras */
+.tabla-empresas thead tr {
+  border-bottom: 2px solid #333;
+}
+
+/* Efecto al pasar el ratón */
+.tabla-empresas tbody tr:hover {
+  background-color: #f5f5f5;
+}
+

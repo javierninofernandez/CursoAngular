@@ -1,0 +1,56 @@
+PASOS PARA EL USO DE SERVICIOS CON PETICIONES HTTP
+
+0 Opcional si queremos mantener el ejemplo basico
+	- crearnos otros componentes
+		- ej. lista-empresas-api
+		- ej. page-lista-empresas-api
+	- Modificar Barra Navegacion
+	- Modificar route.ts
+	
+
+1. Crear el servicio que va a usar http (ej. clietes.http)  ng g s
+
+2. Modificar el app.config.ts
+	incluir en Providers: [ ... , provideHttpClient() ]
+
+3. Implementar el servicio
+	3.1 - Inyectar el httpClient
+	3.2 - propiedad con url base del API ('http://localhost:3000/clientes';)
+	3.2 - Implementar las llamadas al API
+		- Retornan un Observable<tipo>
+		
+	Ejmeplo de una lista de metodos a implementar
+    - obtenerListaClientes(){} 
+    - obtenerClientaClientes(id:string)
+    - cambiarEstado(empresa:ClienteAPI, newEstado:EstadoCliente)
+    - activarEmpresa(empresa:ClienteAPI)
+    - desactivarEmpresa(empresa:ClienteAPI)
+    - bajaEmpresa(empresa:ClienteAPI)
+    - eliminarEmpresa(empresa: ClienteAPI)
+	
+	NOTA IMPORTANTE:
+	Todas los metodos indicados retorna un Observable<TipoDatos>
+			
+		
+	* lista de funciones api disponibles para utilizar en los metodos del servicio
+		- return this.http.get<ClienteAPI[]>(this.apiUrl);
+		- return this.http.get<ClienteAPI>(`${this.apiUrl}/$id`);
+		- return this.http.patch<ClienteAPI>(`${this.apiUrl}/${empresa.id}`, {estado: newEstado});
+		- return this.http.delete<void>(`${this.apiUrl}/${empresa.id}`);
+		
+		
+4. Implementar nuestro componente.
+	4.1. - Usar el servicio (inyectar el servicio)
+	4.2. - implementar las funciones llamado al servicio con .Subcribe
+		
+	IMPORTANTE: Estructura de utilizacion Subcribe al Observable que devuelve el servicio API
+    this.servicioClientesHttp.obtenerListaClientes().subscribe({
+      next: (listaempresa) => {
+          this.listaEmpresas = listaempresa;
+      },
+      error: (error) => {console.log('mostrar un error')}
+    })
+	
+	4.3. - uso evento ngOnInit del ciclo de vida del componente
+	
+	

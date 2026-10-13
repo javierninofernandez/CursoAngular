@@ -1,0 +1,75 @@
+Ejercicio: PAso de parametros por url
+
+La idea final es unir el listado de clientes con la ficha de edición.
+
+--------------------------------------------------------------------
+PASO 1: Definir parametro en routes.ts 
+--------------------------------------------------------------------
+- se usa : -> :NombreParametro/:nombreParametro2 
+- ejemplo 
+	{ path: 'ficha-clientes-api/:id', component: PageFichaClienteComponent },
+
+
+--------------------------------------------------------------------
+PASO 2: Gestión en el componente destino (ficha-cliente)
+--------------------------------------------------------------------
+2.1 Usar el servicio ActivatedRouter
+- importar ActivatedRoute ->  import { ActivatedRoute } from '@angular/router';
+- inyectar el servicio de ActivatesRouter -> private route = inject(ActivatedRoute) ;
+2.2 Obtener el parametro en el componente 
+- Obtener el Id -> clienteID = this.route.snapshot.paramMap.get('id');
+2.2 Usar el Evento ngOnInit para discriminar en funcion del valor del parametro recibido.
+- Obtener datos del cliente con el id pasado como parametro o no si es vacio
+
+
+--------------------------------------------------------------------
+PASO 3: Llamar a la ficha desde el listado de Clientes
+--------------------------------------------------------------------
+Navegar a una ruta desde el codigo typeScript
+
+3.1. Importar el Router
+	import { Router } from '@angular/router';
+3.2. Inyectar el servicio para su uso
+	private router = inject(Router);
+3.3. Navegar a otro componente usando el servicio de router
+	- Crear un boton en la tabla para editar.
+	- implementar el boton
+		this.router.navigate(['/ficha-clientes-api', empresa.id]);
+		--['path', parametro1, ..., parametroN]
+3.4. Boton Insertar
+	- Crear un nuevo boton fuera de la tabla para insertar una nueva empresa
+	- implementar el boton llamando a la ficha pero sin pasar parametro id
+	
+
+
+	
+--------------------------------------------------------------------	
+AMPLIACION -> Controlar desde que componente se le llama a otro componente
+--------------------------------------------------------------------
+Objetivo Uso del servicio 'Location' para controlar valores de la URL/navegación 
+
+--------------------------------------------------------------------	
+PASO 1. Modificacion de la llamada desde componente origen para indicar desde donde se llama
+--------------------------------------------------------------------
+1. Añadir objeto 'state' en el router.navigate : 
+	Aqui se le puede pasar un objeto con multiples valores, Ej. Tambien se podria pasar el id
+	Ej. para pasar la info. del nombre del componente que llamaa otro:
+      this.router.navigate(['/ficha-cliente/editar', empresa.id], {
+        state: { origen: 'lista-clientes-final' },        
+      });
+	
+--------------------------------------------------------------------
+PASO 2. Uso en el componente destino
+-------------------------------------------------------------------- 
+2.1. Importar Location del Router
+	import { Location } from '@angular/common';
+2.2. Inyectar el servicio para su uso
+	private location = inject(Location);
+2.3. Obtener valores y gestionar
+    const origen = history.state.origen;
+    console.log('Navegación iniciada desde:', (origen) ? origen : 'sin definir');
+2.4. Navegar hacia atras (boton volver de la ficha)
+	this.location.back();
+
+
+

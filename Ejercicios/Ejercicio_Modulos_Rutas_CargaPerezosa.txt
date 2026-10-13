@@ -1,0 +1,21 @@
+Ejercicio Modulos y Carga perezosa
+
+1. Crear un modulo contactos con fichero de rutas
+	Ej: ng g s /path/nombre_modulo --routing
+	
+2. Crear la organización de carpetas sugeridas dentro del modulo
+
+3. Crear un par de paginas page-lista-contactos y page-ficha-contactos con la estructura de navbar/header
+	La idea es solo tener algo que mostrar
+	
+4. Definir las rutas hijas en el routes del modulo (contactos-routing.module.ts)
+	mismo formato que en app.routes.ts 
+	
+5. Importar el routing en el modulo hijo (contactos.module.ts)
+
+5. Usar la carga perezosa en el routes general
+
+	Ej: path:'contactos', loadChildren:()=> import('./contactos/contacto.module').then(m => m.ContactoModule)
+	
+6. Incluir las paginas en el Navbar y probar funcionamiento
+	* el path debe contener la raiz asignada a los hijos del modulo

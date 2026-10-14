@@ -13,19 +13,23 @@ PASO 1: Definir parametro en routes.ts
 --------------------------------------------------------------------
 PASO 2: Gestión en el componente destino (ficha-cliente)
 --------------------------------------------------------------------
+Uso de ActivatedRoute ('@angular/router');
+
 2.1 Usar el servicio ActivatedRouter
-- importar ActivatedRoute ->  import { ActivatedRoute } from '@angular/router';
-- inyectar el servicio de ActivatesRouter -> private route = inject(ActivatedRoute) ;
+	- importar ActivatedRoute ->  import { ActivatedRoute } from '@angular/router';
+	- inyectar el servicio de ActivatesRouter -> private route = inject(ActivatedRoute) ;
 2.2 Obtener el parametro en el componente 
-- Obtener el Id -> clienteID = this.route.snapshot.paramMap.get('id');
+- Obtener el Id 
+	-> clienteID = this.route.snapshot.paramMap.get('id');
 2.2 Usar el Evento ngOnInit para discriminar en funcion del valor del parametro recibido.
-- Obtener datos del cliente con el id pasado como parametro o no si es vacio
+	- Obtener datos del cliente con el id pasado como parametro o no si es vacio
 
 
 --------------------------------------------------------------------
 PASO 3: Llamar a la ficha desde el listado de Clientes
 --------------------------------------------------------------------
 Navegar a una ruta desde el codigo typeScript
+Router - (@angular/router)
 
 3.1. Importar el Router
 	import { Router } from '@angular/router';
@@ -41,13 +45,35 @@ Navegar a una ruta desde el codigo typeScript
 	- implementar el boton llamando a la ficha pero sin pasar parametro id
 	
 
+NOTA: Opcion de para es pasar el parámetro de consulta (queryParams)
+URL del tipo URL_BASE\cliente?idCliente=123:
+
+Llamar -> this.router.navigate(['/cliente'],
+ {  queryParams: { idCliente: 123 } });
+
+Recuperar el parámetro:
+	this.route.queryParamMap.subscribe(params => {
+		const idCliente = Number(params.get('idCliente'));
+	});
 
 	
 --------------------------------------------------------------------	
-AMPLIACION -> Controlar desde que componente se le llama a otro componente
+AMPLIACION -> Controlar desde que componente se le llama a otro componente y volver a el
 --------------------------------------------------------------------
-Objetivo Uso del servicio 'Location' para controlar valores de la URL/navegación 
+Objetivo: 
+- Saber desde donde hemos navegado
+- PAso de informacion oculta en la url
+- Volver Atras
 
+Uso de State en las rutas:
+	Nos permite enviar datos ocultos y arbitrarios (objetos, números, strings) junto con una navegación
+	sin necesidad de exponerlos en la URL 
+	Uso de state & history.state / getCurrentNavigation()
+
+Servicio 'Location' para controlar interactuar con la URL/navegación 
+	Uso principal para volver atras location.back()
+	(@angular/common) 
+	
 --------------------------------------------------------------------	
 PASO 1. Modificacion de la llamada desde componente origen para indicar desde donde se llama
 --------------------------------------------------------------------
@@ -61,14 +87,17 @@ PASO 1. Modificacion de la llamada desde componente origen para indicar desde do
 --------------------------------------------------------------------
 PASO 2. Uso en el componente destino
 -------------------------------------------------------------------- 
+
+2.1. Obtener valores pasados en el state y gestionar
+    const origen = history.state.origen;
+    console.log('Navegación iniciada desde:', (origen) ? origen : 'sin definir');
+
+Navegar atras
 2.1. Importar Location del Router
 	import { Location } from '@angular/common';
 2.2. Inyectar el servicio para su uso
 	private location = inject(Location);
-2.3. Obtener valores y gestionar
-    const origen = history.state.origen;
-    console.log('Navegación iniciada desde:', (origen) ? origen : 'sin definir');
-2.4. Navegar hacia atras (boton volver de la ficha)
+2.3. Navegar hacia atras (boton volver de la ficha)
 	this.location.back();
 
 
